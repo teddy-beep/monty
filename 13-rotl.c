@@ -1,26 +1,26 @@
 #include "monty.h"
-/**
-  *f_rotl- rotates the stack to the top
-  *@head: stack head
-  *@counter: line_number
-  *Return: no return
- */
-void f_rotl(stack_t **head,  __attribute__((unused)) unsigned int counter)
-{
-	stack_t *tmp = *head, *aux;
 
-	if (*head == NULL || (*head)->next == NULL)
+/**
+  * rotl - Rotates the stack to the top
+  * @stack: The head of the stack
+  * @line_number: The line on which the error occurred
+  *
+  * Return: Nothing
+  */
+void rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *curr = *stack;
+	unsigned int temp = 0;
+	(void) line_number;
+
+	if (curr && curr->next)
 	{
-		return;
+		while (curr->next != NULL)
+		{
+			temp = curr->n;
+			curr->n = curr->next->n;
+			curr->next->n = temp;
+			curr = curr->next;
+		}
 	}
-	aux = (*head)->next;
-	aux->prev = NULL;
-	while (tmp->next != NULL)
-	{
-		tmp = tmp->next;
-	}
-	tmp->next = *head;
-	(*head)->next = NULL;
-	(*head)->prev = tmp;
-	(*head) = aux;
 }
