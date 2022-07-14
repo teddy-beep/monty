@@ -4,7 +4,7 @@
  * @head: stack head
  * @counter: line_number
  * Return: no return
- */
+*/
 void f_push(stack_t **head, unsigned int counter)
 {
 	int n, j = 0, flag = 0;
@@ -15,7 +15,7 @@ void f_push(stack_t **head, unsigned int counter)
 			j++;
 		for (; bus.arg[j] != '\0'; j++)
 		{
-			if (bus..arg[j] > 57 || bus.arg[j] < 48)
+			if (bus.arg[j] > 57 || bus.arg[j] < 48)
 				flag = 1; }
 		if (flag == 1)
 		{ fprintf(stderr, "L%d: usage: push integer\n", counter);
