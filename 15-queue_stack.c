@@ -1,61 +1,65 @@
 #include "monty.h"
-/**
- * f_stack - prints the top
- * @head: stack head
- * @counter: line_number
- * Return: no return
-*/
-void f_stack(stack_t **head, unsigned int counter)
-{
-	(void)head;
-	(void)counter;
-	bus.lifi = 0;
-}
 
 /**
- * f_queue - prints the top
- * @head: stack head
- * @counter: line_number
- * Return: no return
-*/
-void f_queue(stack_t **head, unsigned int counter)
+  * push - Adds a new node at the beginning of the stack
+  * @stack: The head of the stack
+  * @param: The value to adds on the stack
+  *
+  * Return: Nothing
+  */
+void push(stack_t **stack, unsigned int param)
 {
-	(void)head;
-	(void)counter;
-	bus.lifi = 1;
-}
+	stack_t *new_node = NULL;
 
-/**
- * addqueue - add node to the tail stack
- * @n: new_value
- * @head: head of the stack
- * Return: no return
-*/
-void addqueue(stack_t **head, int n)
-{
-	stack_t *new_node, *aux;
-
-	aux = *head;
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
+		handle_error(ERR_BAD_MALL, NULL, 0, NULL);
+
+	new_node->n = param;
+	if (*stack)
 	{
-		printf("Error\n");
+		new_node->next = *stack;
+		new_node->prev = (*stack)->prev;
+		(*stack)->prev = new_node;
+		*stack = new_node;
+		return;
 	}
-	new_node->n = n;
-	new_node->next = NULL;
-	if (aux)
-	{
-		while (aux->next)
-			aux = aux->next;
-	}
-	if (!aux)
-	{
-		*head = new_node;
-		new_node->prev = NULL;
-	}
-	else
-	{
-		aux->next = new_node;
-		new_node->prev = aux;
-	}
+
+	new_node->next = *stack;
+	new_node->prev = NULL;
+	*stack = new_node;
 }
+
+/**
+  * push_queue - Adds a new node at the end of the stack
+  * @stack: The head of the stack
+  * @param: The value to adds on the stack
+  *
+  * Return: Nothing
+  */
+void push_queue(stack_t **stack, unsigned int param)
+{
+	stack_t *current = NULL, *new_node = NULL;
+
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
+		handle_error(ERR_BAD_MALL, NULL, 0, NULL);
+
+	new_node->n = param;
+	if (*stack)
+	{
+		current = *stack;
+		while (current->next != NULL)
+			current = current->next;
+
+		new_node->next = NULL;
+		new_node->prev = current;
+		current->next = new_node;
+		return;
+	}
+
+	new_node->next = *stack;
+	new_node->prev = NULL;
+	*stack = new_node;
+}
+
